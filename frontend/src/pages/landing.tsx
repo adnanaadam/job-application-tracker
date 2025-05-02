@@ -31,13 +31,6 @@ const Landing = () => {
   return (
     <div className='flex min-h-screen flex-col bg-neutral-900 text-white'>
       <div className='container mx-auto flex flex-1 flex-col'>
-      <header className='flex items-center justify-between p-4'>
-        <h1 className='text-2xl font-bold'>JobTrackr</h1>
-        <Link to='/dashboard' className='text-blue-400'>
-          Login
-        </Link>
-      </header>
-
       <main className='mt-16 flex flex-1 flex-col items-center justify-center px-4 text-center'>
         <h2 className='mb-6 text-4xl font-bold md:text-5xl'>
           Track Your Job Applications Effortlessly
@@ -68,10 +61,6 @@ const Landing = () => {
         </section>
       </main>
       </div>
-
-      <footer className='mt-16 p-4 text-center text-sm text-gray-500'>
-        © {new Date().getFullYear()} JobTrackr. All rights reserved.
-      </footer>
     </div>
   );
 };

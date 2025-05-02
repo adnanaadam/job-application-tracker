@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
 import './index.css';
 import App from './App';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = document.getElementById('root') as HTMLElement;
 
