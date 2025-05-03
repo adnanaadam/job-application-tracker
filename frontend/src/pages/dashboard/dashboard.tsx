@@ -7,7 +7,7 @@ export default function Dashboard() {
     <div>
       <SidebarProvider>
         <AppSidebar />
-        <main>
+        <main className='w-full p-4'>
           <SidebarTrigger />
           <Outlet />
         </main>

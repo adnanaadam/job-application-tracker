@@ -6,12 +6,14 @@ const mockApplications = [
     company: 'TechCorp',
     position: 'Senior Frontend Developer',
     status: 'interview',
+    contactPhone: '555-1234',
     appliedDate: '2023-06-15',
     updatedAt: '2023-06-18',
     contactEmail: 'hr@techcorp.com',
     website: 'https://techcorp.com',
     location: 'San Francisco, CA',
-    notes: 'Technical interview scheduled for June 20th'
+    notes: 'Technical interview scheduled for June 20th',
+    progress: 75,
   },
   // Add more mock applications as needed
 ]
@@ -19,11 +21,12 @@ const mockApplications = [
 export function useMockApplications() {
   const [applications, setApplications] = useState(mockApplications)
 
-  const getApplicationById = (id) => {
-    return applications.find(app => app.id === id)
+  const getApplicationById = (id: string) => {
+    const application = applications.find(app => app.id === id);
+    return application ? { ...application, status } : {};
   }
 
-  const addApplication = (newApp) => {
+  const addApplication = (newApp: any) => {
     const application = {
       ...newApp,
       id: Date.now().toString(),
@@ -33,7 +36,7 @@ export function useMockApplications() {
     setApplications([...applications, application])
   }
 
-  const updateApplication = (id, updatedApp) => {
+  const updateApplication = (id: string, updatedApp: any) => {
     setApplications(applications.map(app => 
       app.id === id 
         ? { 
@@ -46,7 +49,7 @@ export function useMockApplications() {
     ))
   }
 
-  const deleteApplication = (id) => {
+  const deleteApplication = (id: string) => {
     setApplications(applications.filter(app => app.id !== id))
   }
 
@@ -59,9 +62,16 @@ export function useMockApplications() {
   }
 }
 
-function format(date, formatStr) {
+function format(date: any, formatStr: string) {
   // Simple date formatter for mock data
   if (typeof date === 'string') return date
-  const pad = (num) => num.toString().padStart(2, '0')
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+  const pad = (num: number) => num.toString().padStart(2, '0')
+  switch (formatStr) {
+    case 'YYYY-MM-DD':
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+    case 'MM/DD/YYYY':
+      return `${pad(date.getMonth() + 1)}/${pad(date.getDate())}/${date.getFullYear()}`
+    default:
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+  }
 }

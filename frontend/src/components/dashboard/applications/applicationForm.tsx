@@ -32,25 +32,35 @@ export function ApplicationForm() {
   const { getApplicationById, addApplication, updateApplication } = useMockApplications()
   const isEditMode = Boolean(id)
 
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: isEditMode 
-      ? getApplicationById(id)
-      : {
-          company: '',
-          position: '',
-          status: 'applied',
-          appliedDate: new Date(),
-          contactEmail: '',
-          contactPhone: '',
-          website: '',
-          location: '',
-          notes: '',
-        }
-  })
+ const form = useForm<{
+   status: "interview" | "applied" | "offer" | "rejected";
+   company: string;
+   position: string;
+   appliedDate: Date;
+   notes?: string | undefined;
+   contactEmail?: string | undefined;
+   contactPhone?: string | undefined;
+   website?: string | undefined;
+   location?: string | undefined;
+ }>({
+   resolver: zodResolver(formSchema),
+   defaultValues: isEditMode 
+   ? id ? getApplicationById(id) : {}
+   : {
+         company: '',
+         position: '',
+         status: 'applied',
+         appliedDate: new Date(),
+         contactEmail: '',
+         contactPhone: '',
+         website: '',
+         location: '',
+         notes: '',
+       }
+ })
 
-  const onSubmit = (values) => {
-    if (isEditMode) {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    if (isEditMode && id !== undefined) {
       updateApplication(id, values)
     } else {
       addApplication(values)

@@ -8,7 +8,7 @@ import { useMockApplications } from '@/hooks/use-mock-applications' // Custom mo
 export function ApplicationDetail() {
   const { id } = useParams()
   const { getApplicationById } = useMockApplications()
-  const application = getApplicationById(id)
+ const application: any | null = id ? getApplicationById(id) : null;
 
   if (!application) {
     return (

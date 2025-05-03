@@ -18,12 +18,12 @@ const Footer = () => {
             <p className="text-sm text-gray-600 mb-4">
               The modern way to track your job search journey.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-4 *:transition-colors *:p-2 *:rounded-full *:hover:bg-blue-100">
               <a 
                 href="https://github.com/yourusername/jobtrackr" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-gray-900 transition-colors p-2 rounded-full hover:bg-blue-100"
+                className="text-gray-500 hover:text-gray-900"
               >
                 <GitHubLogoIcon className="h-5 w-5" />
               </a>
@@ -31,7 +31,7 @@ const Footer = () => {
                 href="https://twitter.com/yourhandle" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-blue-500 transition-colors p-2 rounded-full hover:bg-blue-100"
+                className="text-gray-500 hover:text-blue-500"
               >
                 <TwitterLogoIcon className="h-5 w-5" />
               </a>
@@ -39,7 +39,7 @@ const Footer = () => {
                 href="https://linkedin.com/company/yourcompany" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-500 hover:text-blue-700 transition-colors p-2 rounded-full hover:bg-blue-100"
+                className="text-gray-500 hover:text-blue-700"
               >
                 <LinkedInLogoIcon className="h-5 w-5" />
               </a>
@@ -51,22 +51,19 @@ const Footer = () => {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-4">
               Product
             </h3>
-            <div className="space-y-3 flex flex-col">
+            <div className="space-y-3 flex flex-col *:text-sm *:text-gray-600 *:hover:text-blue-600 *:transition-all *:inline-block *:duration-300 *:hover:translate-x-1">
               <Link 
-                to="/features" 
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors inline-block hover:translate-x-1"
+                to="/features"
               >
                 Features
               </Link>
               <Link 
-                to="/updates" 
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors inline-block hover:translate-x-1"
+                to="/updates"
               >
                 Updates
               </Link>
               <Link 
-                to="/roadmap" 
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors inline-block hover:translate-x-1"
+                to="/roadmap"
               >
                 Roadmap
               </Link>
@@ -77,22 +74,19 @@ const Footer = () => {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-4">
               Resources
             </h3>
-            <div className="space-y-3 flex flex-col">
+            <div className="space-y-3 flex flex-col *:text-sm *:text-gray-600 *:hover:text-blue-600 *:transition-all *:inline-block *:duration-300 *:hover:translate-x-1">
               <Link 
-                to="/blog" 
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors inline-block hover:translate-x-1"
+                to="/blog"
               >
                 Blog
               </Link>
               <Link 
                 to="/guides" 
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors inline-block hover:translate-x-1"
               >
                 Job Search Guides
               </Link>
               <Link 
                 to="/templates" 
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors inline-block hover:translate-x-1"
               >
                 Templates
               </Link>
@@ -103,22 +97,19 @@ const Footer = () => {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-4">
               Company
             </h3>
-            <div className="space-y-3 flex flex-col">
+            <div className="space-y-3 flex flex-col *:text-sm *:text-gray-600 *:hover:text-blue-600 *:transition-all *:inline-block *:duration-300 *:hover:translate-x-1">
               <Link 
                 to="/about" 
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors inline-block hover:translate-x-1"
               >
                 About Us
               </Link>
               <Link 
-                to="/contact" 
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors inline-block hover:translate-x-1"
+                to="/contact"
               >
                 Contact
               </Link>
               <Link 
                 to="/privacy" 
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors inline-block hover:translate-x-1"
               >
                 Privacy Policy
               </Link>
@@ -139,7 +130,7 @@ const Footer = () => {
               Cookies
             </Link>
             <p className="text-sm text-gray-500 inline-flex items-center">
-              Made with <Heart className="mx-1 h-4 w-4 text-red-500" /> in SF
+              Made with <Heart className="mx-1 h-4 w-4 text-red-500" /> in GH
             </p>
           </div>
         </div>
