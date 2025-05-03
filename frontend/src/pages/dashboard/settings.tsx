@@ -1,7 +1,7 @@
 import { AccountActions } from "@/components/dashboard/settings/accountsActions";
 import { BillingSection } from "@/components/dashboard/settings/billingSection";
 import { DeleteAccountDialog } from "@/components/dashboard/settings/deleteAccountDialog";
-import { LogoutSection } from "@/components/dashboard/settings/logOutSection";
+import { LogoutSection } from "@/components/dashboard/settings/logout";
 import { NotificationsSection } from "@/components/dashboard/settings/notificationsSections";
 import { ProfileSection } from "@/components/dashboard/settings/profileSection";
 import { SecuritySection } from "@/components/dashboard/settings/securitySection";
