@@ -4,7 +4,7 @@ interface Application {
   id: string;
   company: string;
   position: string;
-  status: "Applying" | "Applied" | "Bookmarked" | "Completed";
+  status: string;
   notes: string;
 }
 
@@ -13,7 +13,7 @@ interface Interview {
   company: string;
   position: string;
   interviewDate: string;
-  status: "Interviewing" | "Scheduled on" | "Completed";
+  status: string;
   notes: string;
 }
 
@@ -22,7 +22,7 @@ interface Offer {
   company: string;
   position: string;
   offerDate: string;
-  status: "Offered" | "Accepted" | "Rejected";
+  status: string;
   notes: string;
 }
 
@@ -34,12 +34,7 @@ interface ApplicationState {
   addApplication: (app: Application) => void;
   addInterview: (interview: Interview) => void;
   addOffer: (offer: Offer) => void;
-  removeApplication: (id: string) => void;
-  removeInterview: (id: string) => void;
-  removeOffer: (id: string) => void;
-  updateApplicationStatus: (id: string, status: "Applying" | "Applied" | "Bookmarked" | "Completed") => void;
-  updateInterviewStatus: (id: string, status: "Interviewing" | "Scheduled on (date)" | "Completed") => void;
-  updateOfferStatus: (id: string, status: "Offered" | "Accepted" | "Rejected") => void;
+  promoteApplicationToInterview: (appId: string, interviewDate: string) => void;
 }
 
 export const useApplicationStore = create<ApplicationState>((set) => ({
@@ -47,78 +42,68 @@ export const useApplicationStore = create<ApplicationState>((set) => ({
   interviews: [],
   offers: [],
 
-  // Add a new application
+  // Add Application: automatically add to interview if status is "Scheduled"
   addApplication: (app) =>
     set((state) => ({
       applications: [...state.applications, app],
+      interviews:
+        app.status === "Scheduled"
+          ? [
+              ...state.interviews,
+              {
+                id: app.id,
+                company: app.company,
+                position: app.position,
+                interviewDate: "", // Empty until interview scheduled
+                status: app.status,
+                notes: app.notes,
+              },
+            ]
+          : state.interviews,
     })),
 
-  // Add a new interview
+  // Add Interview: add to both interviews and applications (promote status)
   addInterview: (interview) =>
     set((state) => ({
       interviews: [...state.interviews, interview],
+      applications: state.applications.map((app) =>
+        app.id === interview.id
+          ? { ...app, status: interview.status, notes: interview.notes }
+          : app
+      ),
     })),
 
-  // Add a new offer
+  // Add Offer: add to both offers and applications (update offer status)
   addOffer: (offer) =>
     set((state) => ({
       offers: [...state.offers, offer],
+      applications: state.applications.map((app) =>
+        app.id === offer.id
+          ? { ...app, status: offer.status, notes: offer.notes }
+          : app
+      ),
     })),
 
-  // Remove an application by ID
-  removeApplication: (id) =>
-    set((state) => ({
-      applications: state.applications.filter((app) => app.id !== id),
-    })),
-
-  // Remove an interview by ID
-  removeInterview: (id) =>
-    set((state) => ({
-      interviews: state.interviews.filter((interview) => interview.id !== id),
-    })),
-
-  // Remove an offer by ID
-  removeOffer: (id) =>
-    set((state) => ({
-      offers: state.offers.filter((offer) => offer.id !== id),
-    })),
-
-  // Update application status and move to the correct section
-  updateApplicationStatus: (id, status) =>
+  // Promote an Application to an Interview with a date
+  promoteApplicationToInterview: (appId, interviewDate) =>
     set((state) => {
-      const updatedApplications = state.applications.map((app) => {
-        if (app.id === id) {
-          const newApp = { ...app, status };
+      const app = state.applications.find((a) => a.id === appId);
+      if (!app) return state;
 
-          // If the application moves to interview or offer, remove it from applications
-          if (status === "Interviewing" || status === "Scheduled on (date)") {
-            state.applications = state.applications.filter((app) => app.id !== id);
-            state.interviews = [...state.interviews, newApp];
-          } else if (status === "Offered" || status === "Accepted" || status === "Rejected") {
-            state.applications = state.applications.filter((app) => app.id !== id);
-            state.offers = [...state.offers, newApp];
-          }
+      const newInterview: Interview = {
+        id: app.id,
+        company: app.company,
+        position: app.position,
+        interviewDate,
+        status: "Scheduled",
+        notes: app.notes,
+      };
 
-          return newApp;
-        }
-        return app;
-      });
-      return { applications: updatedApplications };
+      return {
+        interviews: [...state.interviews, newInterview],
+        applications: state.applications.map((a) =>
+          a.id === appId ? { ...a, status: "Scheduled" } : a
+        ),
+      };
     }),
-
-  // Update interview status
-  updateInterviewStatus: (id, status) =>
-    set((state) => ({
-      interviews: state.interviews.map((interview) =>
-        interview.id === id ? { ...interview, status } : interview
-      ),
-    })),
-
-  // Update offer status
-  updateOfferStatus: (id, status) =>
-    set((state) => ({
-      offers: state.offers.map((offer) =>
-        offer.id === id ? { ...offer, status } : offer
-      ),
-    })),
 }));
